@@ -1,25 +1,24 @@
 function [raster,t] = eventRaster(spikeTS,eventTS,startT,endT,binWidth)
-
-% loopyPSTH   A simple PSTH function using a for loop
+% eventRaster  Simple per-event spike binning
 % Usage:
-%     [psth, binT] = loopyPSTH(spikeTS, eventTS, minT, maxT, binWidth)
-%
+%     [raster,t] = eventRaster(spikeTS, eventTS, startT, endT [, binWidth])
+% 
 % Inputs (all values are in seconds):
-%     spikeTS:  a vector of spike timestamps
-%     eventTS:  a vector of event timestamps
-%     minT:     the time, relative to each event, of the start of the PSTH
-%               analysis epoch
-%     maxT:     the time, relative to each event, of the end of the PSTH
-%               analysis epoch
-%     binWidth: the width of each bin in the PSTH. Defaults to 1 ms.
+%     spikeTS: a vector of all spike timestamps
+%     eventTS: a vector of M event timestamps to bin with respect to
+%     startT:  The time, relative to each event, of the start of the
+%              analysis epoch
+%     endT:    The time, relative to each event, of the end of the analysis
+%              epoch
+%     binWidth: The width of each raster bin; defaults to 0.001 sec.
 % Outputs:
 %     raster: a T-by-N matrix of the firing rate, in Hz, of the unit
-%           represented in spikeTS, aligned to each timestamp in eventTS,
-%           where T is the number of time points in the raster and N is the
-%           number of events. mean(raster,2) is a PSTH.
+%             represented in spikeTS, aligned to each timestamp in eventTS,
+%             where T is the number of time points in the raster and N is
+%             the number of events. mean(raster,2) is a PSTH.
 %     t: the time of the left edge of each bin in the raster, in seconds,
-%           measured relative to the event represented in eventTS
-%
+%        measured relative to the event represented in eventTS
+% 
 % eventRaster uses the same approach as loopyPSTH, but preserves per-event
 % information. Useful for raster plots or for subdividing a session on a
 % per-trial basis.
