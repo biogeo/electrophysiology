@@ -1,6 +1,7 @@
-function P = timefreq(data, freqs, pars)
+function P = timefreq(data, freqs, sr, pars)
 % given data, a timeseries matrix with each trial a row
 % freqs, a vector of frequencies
+% sr, the sampling rate of the time series
 % pars = [Fb Fc], parameters (see below)
 % return a time-frequency matrix representing the average across trials of
 % the continuous wavelet transform performed with Morlet wavelets
@@ -32,9 +33,3 @@ end
 
 PP = abs(coefs).^2; %calculate power
 P = nanmean(PP,3); %average across trials
-
-% suggested use:
-% plot P using the commands:
-% pcolor(times, freqs, 10*log10(P)) %times is a vector of times
-% shading interp
-% set(gca,'ydir','normal')
