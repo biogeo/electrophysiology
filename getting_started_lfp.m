@@ -20,6 +20,22 @@ tpre = -1;
 tpost = 1.5;
 
 [lfpsplit, binT] = evtsplit(lfp, events, tpre, tpost, sr);
+sep = 1.5;
+lfpmat = bsxfun(@plus, lfp, sep * (1:C));
+tstamps = (1:T)/sr;
+plot(tstamps,lfpmat)
+xlabel('Time (s)')
+ylabel('Channel')
+set(gca, 'YTick', [])
+
+%% Get data around events
+channel = 1;
+tseries = lfp(:,channel);
+
+tpre = 1;
+tpost = 1.5;
+
+[lfpsplit, binT] = evtsplit(tseries, events, tpre, tpost, sr);
 
 %% Plot
 plot(binT, nanmean(lfpsplit), 'k', 'linewidth', 2)
