@@ -23,19 +23,16 @@ tpost = 1.5;
 sep = 1.5;
 lfpmat = bsxfun(@plus, lfp, sep * (1:C));
 tstamps = (1:T)/sr;
-plot(tstamps,lfpmat)
+plot(tstamps,lfp)
 xlabel('Time (s)')
-ylabel('Channel')
+ylabel('Voltage (mV)')
 set(gca, 'YTick', [])
 
 %% Get data around events
-channel = 1;
-tseries = lfp(:,channel);
-
 tpre = 1;
 tpost = 1.5;
 
-[lfpsplit, binT] = evtsplit(tseries, events, tpre, tpost, sr);
+[lfpsplit, binT] = evtsplit(lfp, events, tpre, tpost, sr);
 
 %% Plot
 plot(binT, nanmean(lfpsplit), 'k', 'linewidth', 2)
