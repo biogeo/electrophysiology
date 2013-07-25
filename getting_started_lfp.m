@@ -16,7 +16,7 @@ ylabel('Voltage (mV)')
 set(gca, 'YTick', [])
 
 %% Get data around events
-tpre = 1;
+tpre = -1;
 tpost = 1.5;
 
 [lfpsplit, binT] = evtsplit(lfp, events, tpre, tpost, sr);

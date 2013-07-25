@@ -1,7 +1,7 @@
-function [outdat,time] = evtsplit(data,evt,pretime,posttime,sr,starttime)
+function [outdat,time] = evtsplit(data,evt,startT,endT,sr,starttime)
 % splits the time series data in data with sampling rate sr into a matrix of
-% snippets with one row for each event timestamp in evt; pretime and
-% posttime are the times prior to and following evt to grab; time is a list
+% snippets with one row for each event timestamp in evt; startT and
+% endT are the times relative to evt to grab; time is a list
 % of times for each bin relative to the entries in evt
 % starttime is the timestamp of the first bin in data
 
@@ -17,15 +17,15 @@ end
 
 numevt=numel(evt); %number of event timestamps
 dt = 1/sr; %time bin size
-npre = ceil(pretime*sr); %number of bins to grab before
-npost = ceil(posttime*sr); %number of bins to grab after
+nstart = ceil(startT*sr); %number of bins to grab before
+nend = ceil(endT*sr); %number of bins to grab after
 
 evtrel = evt - starttime; %relative event time
 
 % preallocate output matrix
-outdat = nan(numevt,npre+npost+1); %npre+npost+0 bin
+outdat = nan(numevt,abs(nstart)+abs(nend)+1); %npre+npost+0 bin
 for ind = 1:numevt
-    bins_to_grab = (-npre:npost) + round( evtrel(ind)/dt );
+    bins_to_grab = (nstart:nend) + round( evtrel(ind)/dt );
     
     %now take care of ends of time series
     if bins_to_grab(1) < 1  %if we're at the start of series...
@@ -40,5 +40,5 @@ for ind = 1:numevt
     
 end
 
-time = (-npre:npost)*dt;
+time = (nstart:nend)*dt;
 
