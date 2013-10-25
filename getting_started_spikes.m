@@ -24,10 +24,10 @@ dt = 0.010; % 10 ms bins
 [psth, binT] = eventRaster(times, events, tpre, tpost, dt);
 
 %% Calculate average firing rate and standard error
-fr = nanmean(psth'); % mean firing rate across trials
-std = nanstd(psth'); % standard deviation across trials
-effsamp = sum(~isnan(psth')); % number of non-NaN samples at each time point
-sem = std./sqrt(effsamp);
+fr = nanmean(psth,2); % mean firing rate across trials
+sd = nanstd(psth,[],2); % standard deviation across trials
+effsamp = sum(~isnan(psth),2); % number of non-NaN samples at each time point
+sem = sd./sqrt(effsamp);
 
 %% Smooth ...
 wid = 0.02; % 20 ms smoothing window
@@ -36,22 +36,11 @@ frhi = gauss_convolve(fr + sem, wid, dt);
 frlo = gauss_convolve(fr - sem, wid, dt);
 
 %% ... and plot
-clf
-hold all
-plot(binT, frsm, 'k', 'linewidth',2)
-plot(binT, frhi, 'color', 0.5*[1 1 1], 'linestyle', '--', 'linewidth',1)
-plot(binT, frlo, 'color', 0.5*[1 1 1], 'linestyle', '--', 'linewidth',1)
+plot_with_sem(psth', binT, wid, dt, 0);
 xlabel('Time (s)')
 ylabel('Firing rate (spks/s)')
 
 %% Alternately, use shading
-Xptch = [binT' flipud(binT)']; 
-Yptch = [frlo fliplr(frhi)];
-
-clf
-hold all
-patch(Xptch, Yptch, [0 0 0], 'Facealpha', ... 
-    0.25, 'EdgeColor', 'none'); %black patch with 25% opacity and no border
-plot(binT, frsm, 'k', 'linewidth',2)
+plot_with_sem(psth', binT, wid, dt, 1);
 xlabel('Time (s)')
 ylabel('Firing rate (spks/s)')
