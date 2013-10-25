@@ -36,11 +36,11 @@ frhi = gauss_convolve(fr + sem, wid, dt);
 frlo = gauss_convolve(fr - sem, wid, dt);
 
 %% ... and plot
-plot_with_sem(psth', binT, wid, dt, 0);
+plot_with_sem(psth', wid, dt, 0, binT);
 xlabel('Time (s)')
 ylabel('Firing rate (spks/s)')
 
 %% Alternately, use shading
-plot_with_sem(psth', binT, wid, dt, 1);
+plot_with_sem(psth', wid, dt, 1, binT);
 xlabel('Time (s)')
 ylabel('Firing rate (spks/s)')

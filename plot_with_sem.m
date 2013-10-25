@@ -1,12 +1,12 @@
-function plot_with_sem(x, binT, smwid, dt, type)
+function plot_with_sem(x, smwid, dt, type, binT)
 % plots the data in x with lines or a shaded patch representing +/- 1
 % standard error of the mean
 % x is a trials x timepoints matrix of data; the function will plot 
-% binT is the time axis
 % mean(x) +/- std(x)/sqrt(N)
 % smwid is a smoothing width in absolute units (smwid = 0 => no smoothing)
 % dt is the time step between successive samples
 % type = 0 for dashed lines, 1 for shaded patch
+% binT is the time axis (optional)
 
 xm = nanmean(x);
 sd = nanstd(x);
@@ -18,6 +18,10 @@ if smwid ~= 0
     xsm = gauss_convolve(xm, smwid, dt);
     xhi = gauss_convolve(xm + sem, smwid, dt);
     xlo = gauss_convolve(xm - sem, smwid, dt);
+end
+
+if ~exist('binT', 'var')
+    binT = 1:size(xm, 2);
 end
 
 % now plot
