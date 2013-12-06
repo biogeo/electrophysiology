@@ -1,4 +1,4 @@
-function plot_with_sem(x, smwid, dt, type, binT)
+function plot_with_sem(x, smwid, dt, type, binT, color)
 % plots the data in x with lines or a shaded patch representing +/- 1
 % standard error of the mean
 % x is a trials x timepoints matrix of data; the function will plot 
@@ -7,6 +7,11 @@ function plot_with_sem(x, smwid, dt, type, binT)
 % dt is the time step between successive samples
 % type = 0 for dashed lines, 1 for shaded patch
 % binT is the time axis (optional)
+% color (optional) is an rgb triple
+
+if ~exist('color', 'var')
+    color = [0 0 0];
+end
 
 [ntrials, npts] = size(x);
 
@@ -39,14 +44,14 @@ if type == 1
     Yptch = [xlo fliplr(xhi)];
 
     if ntrials > 1
-        patch(Xptch, Yptch, [0 0 0], 'Facealpha', ...
+        patch(Xptch, Yptch, color, 'Facealpha', ...
             0.25, 'EdgeColor', 'none'); %black patch with 25% opacity and no border
     end
-    plot(binT, xsm, 'k', 'linewidth',2)
+    plot(binT, xsm, 'color', color, 'linewidth',2)
     
 else
-    plot(binT, xsm, 'k', 'linewidth', 2);
-    plot(binT, xhi, 'color', 0.5*[1 1 1], 'linestyle', '--', 'linewidth',1)
-    plot(binT, xlo, 'color', 0.5*[1 1 1], 'linestyle', '--', 'linewidth',1)
+    plot(binT, xsm, 'color', color, 'linewidth', 2);
+    plot(binT, xhi, 'color', 0.5*color, 'linestyle', '--', 'linewidth',1)
+    plot(binT, xlo, 'color', 0.5*color, 'linestyle', '--', 'linewidth',1)
 end
 hold off
