@@ -7,7 +7,7 @@ Your best bet is probably to take a look at the gists containing typical use cas
 * `getting_started_LFP` illustrates the process of making a time/frequency plot.
 
 # Loading Plexon Data
-For loading data from Plexon files, `gplx_load`, `gplx_events_to_fields`, and `gplx_event_ts_byname` simplify and streamline the process. However, they require that the Plexon [Software Development Kit](http://www.plexon.com/sites/default/files/Plexon%20Offline%20SDKs_0.zip) be installed (and perhaps compiled, for non-Windows users) on your system.
+For loading data from Plexon files, `gplx_load`, `gplx_events_to_fields`, and `gplx_event_ts_byname` simplify and streamline the process. However, they require that the Plexon [Software Development Kit](http://www.plexon.com/sites/default/files/Plexon%20SDK%20Bundle.zip) be installed (and perhaps compiled, for non-Windows users) on your system. Note that these functions are for handling the original PLX format files, not the newer PL2 format.
 
 # Sample Data
 The files `sample_events`, `sample_spikes`, and `sample_lfp` all contain sample data used to test and run the gists.
