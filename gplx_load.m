@@ -214,7 +214,14 @@ is_dsp = [];  % For each unit, is DSP channel valid?
 %   unit_ind : The vector-index for each unit in unit_names
 %   sort_num : The 0-based sort number of each unit
 %   dsp_num  : The channel number, all(dsp_num == dsp_chanmap(dsp_ind))
-if ischar(params.Units)
+if isempty(params.Units)
+    % Caller requested no units be loaded.
+    sort_ind = [];
+    dsp_ind = [];
+    unit_ind = [];
+    sort_num = [];
+    dsp_num = [];
+elseif ischar(params.Units)
     if strcmp(params.Units, 'all')
         % Caller requested all non-empty units
         [sort_ind, dsp_ind] = find(ts_count);
